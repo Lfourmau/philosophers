@@ -8,4 +8,11 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct s_struct
+{
+	int 			shared;
+	pthread_mutex_t mutex;
+	int res_init;
+} t_test;
+
 #endif
