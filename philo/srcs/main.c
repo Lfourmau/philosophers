@@ -1,31 +1,31 @@
 #include "../includes/philo.h"
 
-void	*test_thread_fct(void *input)
+void	*increment(void *ptr)
 {
 	int i = 0;
-	pthread_mutex_lock(&((t_test *)input)->mutex);
-	printf("Incrementing the bordel...\n");
+	pthread_mutex_lock(&((t_test *)ptr)->mutex);
+	printf("Increm lauched...\n");
 	while (i < 200000)
 	{
-		((t_test *)input)->shared++;
+		((t_test *)ptr)->shared++;
 		i++;
 	}
-	pthread_mutex_unlock(&((t_test *)input)->mutex);
+	pthread_mutex_unlock(&((t_test *)ptr)->mutex);
+	printf("Increm finished...\n");
 	return (NULL);
 }
 
-int main(int argc, char **argv)
+int main()
 {
-	t_test *mutex_test = (t_test *)malloc(sizeof(t_test));
-	mutex_test->res_init = pthread_mutex_init(&mutex_test->mutex, NULL);
-	mutex_test->shared = 0;
-	(void)argc;
-	(void)argv;
+	t_test *mutex = malloc(sizeof(t_test *));
+	mutex->shared = 0;
+	mutex->res_init = pthread_mutex_init(&mutex->mutex, NULL);
 	pthread_t threads[5];
+
 	int i = 0;
 	while (i <= 4)
 	{
-		pthread_create(&threads[i], NULL, test_thread_fct, (void *)mutex_test);
+		pthread_create(&threads[i], NULL, increment, (void *)mutex);
 		i++;
 	}
 	i = 0;
@@ -34,6 +34,6 @@ int main(int argc, char **argv)
 		pthread_join(threads[i], NULL);
 		i++;
 	}
-	printf("%d\n", mutex_test->shared);
+	printf("%d\n", mutex->shared);
 	return (0);
 }
