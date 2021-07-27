@@ -18,7 +18,8 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 		philos[i].nb_eats = 0;
 		philos[i].shared = shared;
 		pthread_create(&philos[i].identifier, NULL, cycle, &philos[i]);
-		pthread_join(philos[i].identifier, NULL);
+		usleep(2);
+		//pthread_join(philos[i].identifier, NULL);
 	}
 	return (0);
 }

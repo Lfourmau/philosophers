@@ -41,8 +41,8 @@ int main(int argc, char **argv)
 		return (1);
 	shared.forks = malloc(sizeof(pthread_mutex_t) * shared.nb_philo);
 	philos = malloc(sizeof(t_philo) * shared.nb_philo);
-	init_threads(shared.nb_philo, philos, &shared);
 	init_mutex(&shared);
+	init_threads(shared.nb_philo, philos, &shared);
 	destroy_mutex(&shared);
 	return (0);
 }
