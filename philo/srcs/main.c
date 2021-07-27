@@ -1,42 +1,48 @@
 #include "../includes/philo.h"
 
-void	*increment(void *ptr)
+int	get_time(struct timeval time_one)
 {
-	int i = 0;
-	pthread_mutex_lock(&((t_test *)ptr)->mutex);
-	printf("Increm lauched...\n");
-	while (i < 100000)
-	{
-		((t_test *)ptr)->shared++;
-		i++;
-	}
-	pthread_mutex_unlock(&((t_test *)ptr)->mutex);
-	return (NULL);
+	struct timeval time_two;
+	long int first_time;
+	long int second_time;
+
+	gettimeofday(&time_two, NULL);
+	first_time = time_one.tv_sec * 1000 + time_one.tv_usec /1000;
+	second_time = time_two.tv_sec * 1000 + time_two.tv_usec /1000;
+	return (second_time - first_time);
 }
 
-int main()
+int parsing(int argc, char **argv, t_shared *shared)
 {
-	t_test *mutex = malloc(sizeof(t_test *));
-	mutex->shared = 0;
-	mutex->res_init = pthread_mutex_init(&mutex->mutex, NULL);
-	pthread_t threads[10];
-	struct timeval current_time;
+	if (argc != 5 && argc != 6)
+		return (1);
+	shared->nb_philo = ft_atoi(argv[1]);
+	shared->time_die = ft_atoi(argv[2]);
+	shared->time_eat = ft_atoi(argv[3]);
+	shared->time_sleep = ft_atoi(argv[4]);
+	if (shared->nb_philo <= 0 || shared->time_die <= 0
+	|| shared->time_eat <= 0 || shared->time_sleep <= 0)
+		return (1);
+	if (argc == 6)
+		shared->nb_eats = ft_atoi(argv[5]);
+	else
+		shared->nb_eats = 0;
+	return (0);
+}
 
-	gettimeofday(&current_time, NULL);
-	printf("%ld\n%d\n", current_time.tv_sec, current_time.tv_usec);
+int main(int argc, char **argv)
+{
+	long int i;
+	t_philo *philos;
+	t_shared shared;
 
-	int i = 0;
-	while (i <= 9)
-	{
-		pthread_create(&threads[i], NULL, increment, (void *)mutex);
-		i++;
-	}
-	i = 0;
-	while (i <= 9)
-	{
-		pthread_join(threads[i], NULL);
-		i++;
-	}
-	printf("%d\n", mutex->shared);
+	i = -1;
+	if (parsing(argc, argv, &shared))
+		return (1);
+	shared.forks = malloc(sizeof(pthread_mutex_t) * shared.nb_philo);
+	philos = malloc(sizeof(t_philo) * shared.nb_philo);
+	init_threads(shared.nb_philo, philos, &shared);
+	init_mutex(&shared);
+	destroy_mutex(&shared);
 	return (0);
 }
