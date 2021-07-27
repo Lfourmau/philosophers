@@ -1,5 +1,14 @@
 #include "../includes/philo.h"
 
+void	print_messages(char *str, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->shared->speak);
+	//printf("%ld")afficher le temps
+	//printf("Philosopher %d", philo->place)//afficher "Philo X"
+	printf(str);
+	pthread_mutex_unlock(&philo->shared->speak);
+}
+
 int	get_time(struct timeval time_one)
 {
 	struct timeval time_two;

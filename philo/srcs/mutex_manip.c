@@ -2,6 +2,10 @@
 
 void	*cycle(void *param)
 {
+	//go manger
+	//poser fourchette et dormir
+	//se reveiller et penser
+	//check que personne ne depasse les delais/limites de repas et que tout le monde mange. 
 	printf("THREAD NUMBER --> %d\n", ((t_philo *)param)->place);
 	return (NULL);
 }
@@ -18,8 +22,7 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 		philos[i].nb_eats = 0;
 		philos[i].shared = shared;
 		pthread_create(&philos[i].identifier, NULL, cycle, &philos[i]);
-		usleep(2);
-		//pthread_join(philos[i].identifier, NULL);
+		usleep(1);
 	}
 	return (0);
 }
