@@ -11,8 +11,8 @@ void	eating(t_philo *philo)
 	print_messages("has taken a fork", philo);
 	print_messages("Is eating", philo);
 	gettimeofday(&philo->shared->last_eat[philo->index], NULL);
-	philo->nb_eats++;
 	usleep(philo->shared->time_eat * 1000);
+	philo->nb_eats++;
 	pthread_mutex_unlock(&philo->shared->forks[philo->index]);
 	print_messages("has drop a fork", philo);
 	if (philo->index + 1 == philo->shared->nb_philo)
