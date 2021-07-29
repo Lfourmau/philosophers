@@ -23,13 +23,13 @@ int main(int argc, char **argv)
 	t_philo *philos;
 	t_shared shared;
 
-	gettimeofday(&shared.start, NULL);
 	if (parsing(argc, argv, &shared))
 		return (1);
 	shared.forks = malloc(sizeof(pthread_mutex_t) * shared.nb_philo);
 	shared.last_eat = malloc(sizeof(struct timeval) * shared.nb_philo);
 	philos = malloc(sizeof(t_philo) * shared.nb_philo);
 	init_mutexes(&shared);
+	gettimeofday(&shared.start, NULL);
 	init_threads(shared.nb_philo, philos, &shared);
 	track_end(philos, &shared);
 	destroy_mutexes(&shared);

@@ -44,11 +44,11 @@ int			ft_atoi(const char *str)
 	return (res * sign);
 }
 
-void	print_messages(char *str, t_philo *philo)
+void	print_messages(char *str, t_philo *philo, int is_dead)
 {
 	pthread_mutex_lock(&philo->shared->speak);
 	printf("%d Philo %d %s\n", get_time(philo->shared->start), philo->place, str);
-	if (philo->shared->is_dead == 0)
+	if (is_dead == 0)
 		pthread_mutex_unlock(&philo->shared->speak);
 }
 
