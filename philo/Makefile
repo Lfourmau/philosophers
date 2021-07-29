@@ -2,7 +2,8 @@ NAME = philo
 
 SRCS = 	srcs/main.c \
 		srcs/atoi.c \
-		srcs/mutex_manip.c \
+		srcs/init_destroy.c \
+		srcs/actions.c \
 
 OBJS = $(SRCS:.c=.o)
 

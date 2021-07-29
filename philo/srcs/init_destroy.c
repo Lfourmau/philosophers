@@ -1,12 +1,15 @@
 #include "../includes/philo.h"
 
-void	*cycle(void *param)
+void	*cycle(void *philo)
 {
-	//go manger, set last meal, nbeats etc..
-	//poser fourchette et dormir
-	//se reveiller et penser
-	//check que personne ne depasse les delais/limites de repas et que tout le monde mange. 
-	printf("THREAD NUMBER --> %d\n", ((t_philo *)param)->place);
+	usleep(10000);
+	if (((t_philo *)philo)->index % 2 == 0)
+		usleep(10000);
+	while (1)
+	{
+		eating(philo);
+		sleeping(philo);
+	}
 	return (NULL);
 }
 
@@ -18,6 +21,7 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 	while (++i < nbphilo)
 	{
 		philos[i].place = i + 1;
+		philos[i].index = i;
 		philos[i].last_eat = 0; 
 		philos[i].nb_eats = 0;
 		philos[i].shared = shared;

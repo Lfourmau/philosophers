@@ -15,7 +15,6 @@ typedef struct s_shared
 	int 			time_eat;
 	int				time_sleep;
 	int				nb_eats;
-	long int		time_elapsed;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t speak;
 	struct timeval	start;
@@ -25,6 +24,7 @@ typedef struct s_philo
 {
 	pthread_t 		identifier;
 	int				place;
+	int				index;
 	int				last_eat;
 	int				nb_eats;
 	t_shared 		*shared;
@@ -35,6 +35,10 @@ int			ft_atoi(const char *str);
 int			init_threads(int nbphilo, t_philo *philos, t_shared *shared);
 void		init_mutexes(t_shared *shared);
 void		destroy_mutexes(t_shared *shared);
+void		print_messages(char *str, t_philo *philo);
+int			get_time(struct timeval time_one);
+void		eating(t_philo *philo);
+void		sleeping(t_philo *philo);
 
 
 #endif

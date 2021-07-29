@@ -2,9 +2,9 @@
 
 void	print_messages(char *str, t_philo *philo)
 {
-	//pthread_mutex_lock(&philo->shared->speak);
-	//printf("%lu Philo %d %s\n", gettime(), philo->place, str);
-	//pthread_mutex_unlock(&philo->shared->speak);
+	pthread_mutex_lock(&philo->shared->speak);
+	printf("%d Philo %d %s\n", get_time(philo->shared->start), philo->place, str);
+	pthread_mutex_unlock(&philo->shared->speak);
 }
 
 int	get_time(struct timeval time_one)
@@ -42,12 +42,16 @@ int main(int argc, char **argv)
 	t_philo *philos;
 	t_shared shared;
 
+	int i = -1;
+	gettimeofday(&shared.start, NULL);
 	if (parsing(argc, argv, &shared))
 		return (1);
 	shared.forks = malloc(sizeof(pthread_mutex_t) * shared.nb_philo);
 	philos = malloc(sizeof(t_philo) * shared.nb_philo);
 	init_mutexes(&shared);
 	init_threads(shared.nb_philo, philos, &shared);
+	while (++i < shared.nb_philo)
+		pthread_join(philos[i].identifier, NULL);
 	destroy_mutexes(&shared);
 	return (0);
 }
