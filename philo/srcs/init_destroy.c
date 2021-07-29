@@ -1,10 +1,7 @@
 #include "../includes/philo.h"
 
-void	*cycle(void *philo)
+void	*life(void *philo)
 {
-	usleep(10000);
-	if (((t_philo *)philo)->index % 2 == 0)
-		usleep(10000);
 	while (1)
 	{
 		eating(philo);
@@ -20,12 +17,12 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 	i = -1;
 	while (++i < nbphilo)
 	{
-		philos[i].place = i + 1;
 		philos[i].index = i;
-		philos[i].last_eat = 0; 
+		philos[i].place = i + 1;
+		shared->last_eat[i] = get_time(shared->start);
 		philos[i].nb_eats = 0;
 		philos[i].shared = shared;
-		pthread_create(&philos[i].identifier, NULL, cycle, &philos[i]);
+		pthread_create(&philos[i].identifier, NULL, life, &philos[i]);
 		usleep(1);
 	}
 	return (0);
