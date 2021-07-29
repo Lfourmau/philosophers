@@ -10,6 +10,7 @@
 
 typedef struct s_shared
 {
+	int				is_dead;
 	int				nb_philo;
 	int 			time_die;
 	int 			time_eat;

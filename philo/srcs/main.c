@@ -4,7 +4,8 @@ void	print_messages(char *str, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->shared->speak);
 	printf("%d Philo %d %s\n", get_time(philo->shared->start), philo->place, str);
-	pthread_mutex_unlock(&philo->shared->speak);
+	if (philo->shared->is_dead == 0)
+		pthread_mutex_unlock(&philo->shared->speak);
 }
 
 int	get_time(struct timeval time_one)
@@ -14,8 +15,8 @@ int	get_time(struct timeval time_one)
 	long int second_time;
 
 	gettimeofday(&time_two, NULL);
-	first_time = time_one.tv_sec * 1000 + time_one.tv_usec /1000;
-	second_time = time_two.tv_sec * 1000 + time_two.tv_usec /1000;
+	first_time = time_one.tv_sec * 1000 + time_one.tv_usec / 1000;
+	second_time = time_two.tv_sec * 1000 + time_two.tv_usec / 1000;
 	return (second_time - first_time);
 }
 
@@ -51,14 +52,24 @@ int main(int argc, char **argv)
 	philos = malloc(sizeof(t_philo) * shared.nb_philo);
 	init_mutexes(&shared);
 	init_threads(shared.nb_philo, philos, &shared);
-	//while (1)
-	//{
-	//	i = -1;
-	//	while (++i < shared.nb_philo)
-	//		if (check_end(&philos[i]) == 1)
-	//			break;
-	//}
-	//i = -1;
+	while (1)
+	{
+		//i = -1;
+		//while (++i < shared.nb_philo)
+		//	if (philos[i].nb_eats < philos->shared->nb_eats)
+		//		break;
+		//if (i == shared.nb_philo)
+		//{
+		//	shared.is_dead = 1;
+		//	print_messages("Everybody is bien mangé", &philos[i]);
+		//	exit(1);
+		//}
+		i = -1;
+		while (++i < shared.nb_philo)
+			if (check_end(&philos[i]) == 1)
+				exit(1);
+	}
+	i = -1;
 	while (++i < shared.nb_philo)
 		pthread_join(philos[i].identifier, NULL);
 	destroy_mutexes(&shared);
