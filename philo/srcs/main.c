@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	if (parsing(argc, argv, &shared))
 		return (1);
 	shared.forks = malloc(sizeof(pthread_mutex_t) * shared.nb_philo);
-	shared.last_eat = malloc(sizeof(int) * shared.nb_philo);
+	shared.last_eat = malloc(sizeof(struct timeval) * shared.nb_philo);
 	philos = malloc(sizeof(t_philo) * shared.nb_philo);
 	init_mutexes(&shared);
 	init_threads(shared.nb_philo, philos, &shared);

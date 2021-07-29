@@ -24,7 +24,7 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 		shared->is_dead = 0;
 		philos[i].nb_eats = 0;
 		philos[i].shared = shared;
-		shared->last_eat[i] = get_time(shared->start);
+		gettimeofday(&shared->last_eat[i], NULL);
 		pthread_create(&philos[i].identifier, NULL, life, &philos[i]);
 		usleep(1);
 	}

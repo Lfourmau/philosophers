@@ -10,7 +10,7 @@ void	eating(t_philo *philo)
 		pthread_mutex_lock(&philo->shared->forks[philo->index + 1]);
 	print_messages("has taken a fork", philo);
 	print_messages("Is eating", philo);
-	philo->shared->last_eat[philo->index] = get_time(philo->shared->start);
+	gettimeofday(&philo->shared->last_eat[philo->index], NULL);
 	philo->nb_eats++;
 	usleep(philo->shared->time_eat * 1000);
 	pthread_mutex_unlock(&philo->shared->forks[philo->index]);
@@ -31,7 +31,7 @@ void	sleeping(t_philo *philo)
 
 int	check_end(t_philo *philo)
 {
-	if (get_time(philo->shared->start) - philo->shared->last_eat[philo->index] > philo->shared->time_die)
+	if (get_time(philo->shared->last_eat[philo->index]) > philo->shared->time_die)
 	{
 		philo->shared->is_dead = 1;
 		print_messages("is dead", philo);
