@@ -43,3 +43,23 @@ int			ft_atoi(const char *str)
 		return (-1);
 	return (res * sign);
 }
+
+void	print_messages(char *str, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->shared->speak);
+	printf("%d Philo %d %s\n", get_time(philo->shared->start), philo->place, str);
+	if (philo->shared->is_dead == 0)
+		pthread_mutex_unlock(&philo->shared->speak);
+}
+
+int	get_time(struct timeval time_one)
+{
+	struct timeval time_two;
+	long int first_time;
+	long int second_time;
+
+	gettimeofday(&time_two, NULL);
+	first_time = time_one.tv_sec * 1000 + time_one.tv_usec / 1000;
+	second_time = time_two.tv_sec * 1000 + time_two.tv_usec / 1000;
+	return (second_time - first_time);
+}

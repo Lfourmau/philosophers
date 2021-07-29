@@ -12,7 +12,7 @@ void	eating(t_philo *philo)
 	print_messages("Is eating", philo);
 	philo->shared->last_eat[philo->index] = get_time(philo->shared->start);
 	philo->nb_eats++;
-	usleep(philo->shared->time_eat);
+	usleep(philo->shared->time_eat * 1000);
 	pthread_mutex_unlock(&philo->shared->forks[philo->index]);
 	print_messages("has drop a fork", philo);
 	if (philo->index + 1 == philo->shared->nb_philo)
@@ -25,7 +25,7 @@ void	eating(t_philo *philo)
 void	sleeping(t_philo *philo)
 {
 	print_messages("is sleeping", philo);
-	usleep(philo->shared->time_sleep);
+	usleep(philo->shared->time_sleep * 1000);
 	print_messages("is thinking", philo);
 }
 
@@ -38,4 +38,17 @@ int	check_end(t_philo *philo)
 		return (1);
 	}
 	return (0);
+}
+
+void	track_end(t_philo *philos, t_shared *shared)
+{
+	int i;
+
+	while (1)
+	{
+		i = -1;
+		while (++i < shared->nb_philo)
+			if (check_end(&philos[i]) == 1)
+				exit(1);
+	}
 }

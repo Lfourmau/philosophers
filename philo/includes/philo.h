@@ -41,6 +41,8 @@ int			get_time(struct timeval time_one);
 void		eating(t_philo *philo);
 void		sleeping(t_philo *philo);
 int			check_end(t_philo *philos);
+void		track_end(t_philo *philos, t_shared *shared);
+
 
 
 #endif

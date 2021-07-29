@@ -1,13 +1,13 @@
 NAME = philo
 
 SRCS = 	srcs/main.c \
-		srcs/atoi.c \
-		srcs/init_destroy.c \
+		srcs/utils.c \
+		srcs/init_life.c \
 		srcs/actions.c \
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all : $(NAME)
 

@@ -3,7 +3,7 @@
 void	*life(void *philo)
 {
 	if (((t_philo *)philo)->place % 2 == 0)
-		usleep(10);
+		usleep(1000);
 	while (1)
 	{
 		eating(philo);
