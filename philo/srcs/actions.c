@@ -4,21 +4,15 @@ void	eating(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->shared->forks[philo->index]);
 	print_messages("has taken a fork", philo);
-	if (philo->index + 1 == philo->shared->nb_philo)
-		pthread_mutex_lock(&philo->shared->forks[0]);
-	else
-		pthread_mutex_lock(&philo->shared->forks[philo->index + 1]);
+	pthread_mutex_lock(&philo->shared->forks[philo->place % philo->shared->nb_philo]);
 	print_messages("has taken a fork", philo);
-	print_messages("Is eating", philo);
+	print_messages("is eating", philo);
 	gettimeofday(&philo->shared->last_eat[philo->index], NULL);
 	usleep(philo->shared->time_eat * 1000);
 	philo->nb_eats++;
 	pthread_mutex_unlock(&philo->shared->forks[philo->index]);
 	print_messages("has drop a fork", philo);
-	if (philo->index + 1 == philo->shared->nb_philo)
-		pthread_mutex_unlock(&philo->shared->forks[0]);
-	else
-		pthread_mutex_unlock(&philo->shared->forks[philo->index + 1]);
+	pthread_mutex_unlock(&philo->shared->forks[philo->place % philo->shared->nb_philo]);
 	print_messages("has drop a fork", philo);
 }
 
