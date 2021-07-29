@@ -2,7 +2,7 @@
 
 void	*cycle(void *param)
 {
-	//go manger
+	//go manger, set last meal, nbeats etc..
 	//poser fourchette et dormir
 	//se reveiller et penser
 	//check que personne ne depasse les delais/limites de repas et que tout le monde mange. 
@@ -27,20 +27,22 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 	return (0);
 }
 
-void init_mutex(t_shared *shared)
+void init_mutexes(t_shared *shared)
 {
 	int i;
 
 	i = -1;
 	while (++i < shared->nb_philo)
 		pthread_mutex_init(&shared->forks[i], NULL);
+	pthread_mutex_init(&shared->speak, NULL);
 }
 
-void destroy_mutex(t_shared *shared)
+void destroy_mutexes(t_shared *shared)
 {
 	int i;
 
 	i = -1;
 	while (++i < shared->nb_philo)
 		pthread_mutex_destroy(&shared->forks[i]);
+	pthread_mutex_destroy(&shared->speak);
 }
