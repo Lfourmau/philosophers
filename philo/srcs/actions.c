@@ -37,16 +37,6 @@ void	sleeping(t_philo *philo)
 	print_messages("is thinking", philo, 0);
 }
 
-int	check_end(t_philo *philo)
-{
-	if (get_time(philo->shared->last_eat[philo->index]) > philo->shared->time_die)
-	{
-		print_messages("is dead", philo, 1);
-		return (1);
-	}
-	return (0);
-}
-
 void	track_end(t_philo *philos, t_shared *shared)
 {
 	int i;
@@ -55,7 +45,12 @@ void	track_end(t_philo *philos, t_shared *shared)
 	{
 		i = -1;
 		while (++i < shared->nb_philo)
-			if (check_end(&philos[i]) == 1)
+		{
+			if (get_time(shared->last_eat[i]) > philos->shared->time_die)
+			{
+				print_messages("is dead", &philos[i], 1);
 				exit(1);
+			}
+		}
 	}
 }

@@ -17,9 +17,9 @@ typedef struct s_shared
 	int				time_sleep;
 	int				nb_eats;
 	struct timeval	*last_eat;
+	struct timeval	start;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t speak;
-	struct timeval	start;
 }	t_shared;
 
 typedef struct s_philo
@@ -42,6 +42,8 @@ void		eating(t_philo *philo);
 void		sleeping(t_philo *philo);
 int			check_end(t_philo *philos);
 void		track_end(t_philo *philos, t_shared *shared);
+void		custom_usleep(int reach);
+
 
 
 
