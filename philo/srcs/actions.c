@@ -9,7 +9,7 @@ void	custom_usleep(int reach)
 	gettimeofday(&tmp, 0);
 	while (time < reach)
 	{
-		usleep(20);
+		usleep(50);
 		time = get_time(tmp);
 	}
 }
@@ -21,7 +21,9 @@ void	eating(t_philo *philo)
 	pthread_mutex_lock(&philo->shared->forks[philo->place % philo->shared->nb_philo]);
 	print_messages("has taken a fork", philo, 0);
 	print_messages("is eating", philo, 0);
+	pthread_mutex_lock(&philo->shared->eat_mutex[philo->index]);
 	gettimeofday(&philo->shared->last_eat[philo->index], NULL);
+	pthread_mutex_unlock(&philo->shared->eat_mutex[philo->index]);
 	custom_usleep(philo->shared->time_eat); //custom_usleep() sinon decalage de ouf
 	philo->nb_eats++;
 	pthread_mutex_unlock(&philo->shared->forks[philo->index]);
@@ -46,11 +48,16 @@ void	track_end(t_philo *philos, t_shared *shared)
 		i = -1;
 		while (++i < shared->nb_philo)
 		{
+			pthread_mutex_lock(&shared->eat_mutex[i]);
 			if (get_time(shared->last_eat[i]) > philos->shared->time_die)
 			{
 				print_messages("is dead", &philos[i], 1);
-				exit(1);
+				pthread_mutex_unlock(&shared->eat_mutex[i]);
+				destroy_mutexes(shared);
+				return ;
 			}
+			pthread_mutex_unlock(&shared->eat_mutex[i]);
+			usleep(300);
 		}
 	}
 }

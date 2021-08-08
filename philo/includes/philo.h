@@ -19,6 +19,7 @@ typedef struct s_shared
 	struct timeval	*last_eat;
 	struct timeval	start;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*eat_mutex;
 	pthread_mutex_t speak;
 }	t_shared;
 
