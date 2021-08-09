@@ -34,6 +34,7 @@ typedef struct s_philo
 
 
 int			ft_atoi(const char *str);
+int			ft_isdigit(int c);
 int			init_threads(int nbphilo, t_philo *philos, t_shared *shared);
 void		init_mutexes(t_shared *shared);
 void		destroy_mutexes(t_shared *shared);
