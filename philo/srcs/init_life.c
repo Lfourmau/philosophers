@@ -33,6 +33,7 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 		gettimeofday(&shared->last_eat[i], NULL);
 		pthread_create(&philos[i].identifier, NULL, life, &philos[i]);
 	}
+		usleep(10);
 	shared->syncro = 1;
 	return (0);
 }
