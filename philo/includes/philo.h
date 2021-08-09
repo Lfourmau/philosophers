@@ -16,6 +16,7 @@ typedef struct s_shared
 	int 			time_eat;
 	int				time_sleep;
 	int				nb_eats;
+	int				syncro;
 	struct timeval	*last_eat;
 	struct timeval	start;
 	pthread_mutex_t	*forks;

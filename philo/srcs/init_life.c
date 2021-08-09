@@ -1,10 +1,14 @@
 #include "../includes/philo.h"
 
-void	*life(void *philo)
+void	*life(void *arg)
 {
-	//syncro();
-	if (((t_philo *)philo)->place % 2 == 0)
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
+	while (philo->shared->syncro == 0)
 		usleep(1000);
+	if (philo->place % 2 == 1)
+		usleep(3000);
 	while (1)//changer conndition->Mort ou nb de repas
 	{
 		eating(philo);
@@ -18,6 +22,7 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 	int i;
 
 	i = -1;
+	shared->syncro = 0;
 	while (++i < nbphilo)
 	{
 		philos[i].index = i;
@@ -28,7 +33,7 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 		gettimeofday(&shared->last_eat[i], NULL);
 		pthread_create(&philos[i].identifier, NULL, life, &philos[i]);
 	}
-	//shared->syncro_stop = 1
+	shared->syncro = 1;
 	return (0);
 }
 

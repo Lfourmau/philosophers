@@ -24,7 +24,7 @@ void	eating(t_philo *philo)
 	pthread_mutex_lock(&philo->shared->eat_mutex[philo->index]);
 	gettimeofday(&philo->shared->last_eat[philo->index], NULL);
 	pthread_mutex_unlock(&philo->shared->eat_mutex[philo->index]);
-	custom_usleep(philo->shared->time_eat); //custom_usleep() sinon decalage de ouf
+	custom_usleep(philo->shared->time_eat);
 	philo->nb_eats++;
 	pthread_mutex_unlock(&philo->shared->forks[philo->index]);
 	print_messages("has drop a fork", philo, 0);
@@ -35,7 +35,7 @@ void	eating(t_philo *philo)
 void	sleeping(t_philo *philo)
 {
 	print_messages("is sleeping", philo, 0);
-	custom_usleep(philo->shared->time_sleep); //custom_usleep() sinon decalage de ouf
+	custom_usleep(philo->shared->time_sleep);
 	print_messages("is thinking", philo, 0);
 }
 
