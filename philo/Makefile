@@ -4,6 +4,7 @@ SRCS = 	srcs/main.c \
 		srcs/utils.c \
 		srcs/init_life.c \
 		srcs/actions.c \
+		srcs/track_end.c \
 
 OBJS = $(SRCS:.c=.o)
 

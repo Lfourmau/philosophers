@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 09:56:52 by lfourmau          #+#    #+#             */
+/*   Updated: 2021/08/10 09:57:43 by lfourmau         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 int	ft_isdigit(int c)
@@ -7,7 +19,7 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int		ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	if ((c >= 9 && c <= 13) || c == ' ')
 		return (1);
@@ -15,7 +27,7 @@ int		ft_isspace(char c)
 		return (0);
 }
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int				i;
 	int				j;
@@ -47,16 +59,17 @@ int			ft_atoi(const char *str)
 void	print_messages(char *str, t_philo *philo, int is_dead)
 {
 	pthread_mutex_lock(&philo->shared->speak);
-	printf("%d Philo %d %s\n", get_time(philo->shared->start), philo->place, str);
+	printf("%d Philo %d %s\n", \
+	get_time(philo->shared->start), philo->place, str);
 	if (is_dead == 0)
 		pthread_mutex_unlock(&philo->shared->speak);
 }
 
 int	get_time(struct timeval time_one)
 {
-	struct timeval time_two;
-	long int first_time;
-	long int second_time;
+	struct timeval	time_two;
+	long int		first_time;
+	long int		second_time;
 
 	gettimeofday(&time_two, NULL);
 	first_time = time_one.tv_sec * 1000 + time_one.tv_usec / 1000;

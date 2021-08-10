@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_life.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 09:52:49 by lfourmau          #+#    #+#             */
+/*   Updated: 2021/08/10 09:59:04 by lfourmau         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 void	*life(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	while (philo->shared->syncro == 0)
 		usleep(1000);
 	if (philo->place % 2 == 1)
-		usleep(3000);
-	while (1)//changer conndition->Mort ou nb de repas
+		usleep(2000);
+	while (1)
 	{
 		eating(philo);
 		sleeping(philo);
@@ -17,9 +29,9 @@ void	*life(void *arg)
 	return (NULL);
 }
 
-int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
+int	init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	shared->syncro = 0;
@@ -33,14 +45,13 @@ int init_threads(int nbphilo, t_philo *philos, t_shared *shared)
 		gettimeofday(&shared->last_eat[i], NULL);
 		pthread_create(&philos[i].identifier, NULL, life, &philos[i]);
 	}
-		usleep(10);
 	shared->syncro = 1;
 	return (0);
 }
 
-void init_mutexes(t_shared *shared)
+void	init_mutexes(t_shared *shared)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < shared->nb_philo)
@@ -51,9 +62,9 @@ void init_mutexes(t_shared *shared)
 	pthread_mutex_init(&shared->speak, NULL);
 }
 
-void destroy_mutexes(t_shared *shared)
+void	destroy_mutexes(t_shared *shared)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < shared->nb_philo)

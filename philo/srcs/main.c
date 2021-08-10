@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 09:54:01 by lfourmau          #+#    #+#             */
+/*   Updated: 2021/08/10 10:00:33 by lfourmau         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
-int check_arguments(char **argv)
+int	check_arguments(char **argv)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (argv[i])
@@ -22,9 +34,8 @@ int check_arguments(char **argv)
 	return (0);
 }
 
-int parsing(int argc, char **argv, t_shared *shared)
+int	parsing(int argc, char **argv, t_shared *shared)
 {
-
 	if (argc != 5 && argc != 6)
 		return (1);
 	if (check_arguments(argv))
@@ -37,16 +48,17 @@ int parsing(int argc, char **argv, t_shared *shared)
 	shared->time_die = ft_atoi(argv[2]);
 	shared->time_eat = ft_atoi(argv[3]);
 	shared->time_sleep = ft_atoi(argv[4]);
-	if (shared->nb_philo <= 0 || shared->time_die < 0
-	|| shared->time_eat < 0 || shared->time_sleep <= 0 || shared->nb_eats < 0)
+	if (shared->nb_philo <= 0 || shared->time_die <= 0
+		|| shared->time_eat < 0
+		|| shared->time_sleep <= 0 || shared->nb_eats < 0)
 		return (1);
 	return (0);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_philo *philos;
-	t_shared shared;
+	t_philo		*philos;
+	t_shared	shared;
 
 	if (parsing(argc, argv, &shared))
 		return (1);

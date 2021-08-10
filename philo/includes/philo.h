@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 09:50:10 by lfourmau          #+#    #+#             */
+/*   Updated: 2021/08/10 09:50:15 by lfourmau         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -12,8 +24,8 @@ typedef struct s_shared
 {
 	int				is_dead;
 	int				nb_philo;
-	int 			time_die;
-	int 			time_eat;
+	int				time_die;
+	int				time_eat;
 	int				time_sleep;
 	int				nb_eats;
 	int				syncro;
@@ -21,18 +33,17 @@ typedef struct s_shared
 	struct timeval	start;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*eat_mutex;
-	pthread_mutex_t speak;
+	pthread_mutex_t	speak;
 }	t_shared;
 
 typedef struct s_philo
 {
-	pthread_t 		identifier;
-	int				place;
-	int				index;
-	int				nb_eats;
-	t_shared 		*shared;
+	pthread_t	identifier;
+	int			place;
+	int			index;
+	int			nb_eats;
+	t_shared	*shared;
 }	t_philo;
-
 
 int			ft_atoi(const char *str);
 int			ft_isdigit(int c);
@@ -46,8 +57,4 @@ void		sleeping(t_philo *philo);
 int			check_end(t_philo *philos);
 void		track_end(t_philo *philos, t_shared *shared);
 void		custom_usleep(int reach);
-
-
-
-
 #endif

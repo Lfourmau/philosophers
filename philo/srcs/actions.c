@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/10 09:50:28 by lfourmau          #+#    #+#             */
+/*   Updated: 2021/08/10 09:52:26 by lfourmau         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 void	custom_usleep(int reach)
 {
-	int time;
-	struct timeval tmp;
+	int				time;
+	struct timeval	tmp;
 
 	time = 0;
 	gettimeofday(&tmp, 0);
 	while (time < reach)
 	{
-		usleep(50);
+		usleep(20);
 		time = get_time(tmp);
 	}
 }
@@ -18,7 +30,8 @@ void	eating(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->shared->forks[philo->index]);
 	print_messages("has taken a fork", philo, 0);
-	pthread_mutex_lock(&philo->shared->forks[philo->place % philo->shared->nb_philo]);
+	pthread_mutex_lock(&philo->shared->forks[philo->place \
+	% philo->shared->nb_philo]);
 	print_messages("has taken a fork", philo, 0);
 	print_messages("is eating", philo, 0);
 	pthread_mutex_lock(&philo->shared->eat_mutex[philo->index]);
@@ -28,7 +41,8 @@ void	eating(t_philo *philo)
 	philo->nb_eats++;
 	pthread_mutex_unlock(&philo->shared->forks[philo->index]);
 	print_messages("has drop a fork", philo, 0);
-	pthread_mutex_unlock(&philo->shared->forks[philo->place % philo->shared->nb_philo]);
+	pthread_mutex_unlock(&philo->shared->forks[philo->place % \
+	philo->shared->nb_philo]);
 	print_messages("has drop a fork", philo, 0);
 }
 
@@ -37,27 +51,4 @@ void	sleeping(t_philo *philo)
 	print_messages("is sleeping", philo, 0);
 	custom_usleep(philo->shared->time_sleep);
 	print_messages("is thinking", philo, 0);
-}
-
-void	track_end(t_philo *philos, t_shared *shared)
-{
-	int i;
-
-	while (1)
-	{
-		i = -1;
-		while (++i < shared->nb_philo)
-		{
-			pthread_mutex_lock(&shared->eat_mutex[i]);
-			if (get_time(shared->last_eat[i]) > philos->shared->time_die)
-			{
-				print_messages("is dead", &philos[i], 1);
-				pthread_mutex_unlock(&shared->eat_mutex[i]);
-				destroy_mutexes(shared);
-				return ;
-			}
-			pthread_mutex_unlock(&shared->eat_mutex[i]);
-			usleep(300);
-		}
-	}
 }
