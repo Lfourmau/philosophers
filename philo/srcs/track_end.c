@@ -6,7 +6,7 @@
 /*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 09:56:09 by lfourmau          #+#    #+#             */
-/*   Updated: 2021/08/10 09:56:41 by lfourmau         ###   ########lyon.fr   */
+/*   Updated: 2021/08/10 11:40:04 by lfourmau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	track_death(t_shared *shared, t_philo *philos, int i)
 
 int	track_meals(t_shared *shared, t_philo *philos, int i)
 {
-	if (philos[i].nb_eats == shared->nb_eats)
+	if (philos[i].nb_eats >= shared->nb_eats)
 		return (1);
 	return (0);
 }
@@ -47,14 +47,14 @@ void	track_end(t_philo *philos, t_shared *shared)
 				return ;
 			if (shared->nb_eats > 0 && track_meals(shared, philos, i))
 				j++;
-			pthread_mutex_unlock(&shared->eat_mutex[i]);
 			if (j == shared->nb_philo)
 			{
-				print_messages("bien graille", &philos[i], 1);
+				print_messages("and his friends are satiates", &philos[i], 1);
 				pthread_mutex_unlock(&shared->eat_mutex[i]);
 				destroy_mutexes(shared);
 				return ;
 			}
+			pthread_mutex_unlock(&shared->eat_mutex[i]);
 		}
 		usleep(300);
 	}

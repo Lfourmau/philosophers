@@ -6,7 +6,7 @@
 /*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 09:52:49 by lfourmau          #+#    #+#             */
-/*   Updated: 2021/08/10 09:59:04 by lfourmau         ###   ########lyon.fr   */
+/*   Updated: 2021/08/10 11:16:34 by lfourmau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	*life(void *arg)
 
 	philo = (t_philo *)arg;
 	while (philo->shared->syncro == 0)
-		usleep(1000);
+		usleep(4000);
 	if (philo->place % 2 == 1)
-		usleep(2000);
+		usleep(8000);
 	while (1)
 	{
 		eating(philo);

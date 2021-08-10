@@ -6,7 +6,7 @@
 /*   By: lfourmau <lfourmau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 09:54:01 by lfourmau          #+#    #+#             */
-/*   Updated: 2021/08/10 10:00:33 by lfourmau         ###   ########lyon.fr   */
+/*   Updated: 2021/08/10 11:05:07 by lfourmau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parsing(int argc, char **argv, t_shared *shared)
 	shared->time_die = ft_atoi(argv[2]);
 	shared->time_eat = ft_atoi(argv[3]);
 	shared->time_sleep = ft_atoi(argv[4]);
-	if (shared->nb_philo <= 0 || shared->time_die <= 0
+	if (shared->nb_philo <= 0 || shared->time_die < 0
 		|| shared->time_eat < 0
 		|| shared->time_sleep <= 0 || shared->nb_eats < 0)
 		return (1);
@@ -70,5 +70,9 @@ int	main(int argc, char **argv)
 	gettimeofday(&shared.start, NULL);
 	init_threads(shared.nb_philo, philos, &shared);
 	track_end(philos, &shared);
+	free(shared.forks);
+	free(shared.eat_mutex);
+	free(shared.last_eat);
+	free(philos);
 	return (0);
 }
